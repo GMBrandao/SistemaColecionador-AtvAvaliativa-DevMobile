@@ -1,7 +1,12 @@
-﻿namespace SistemaColecionador.Domain.Entities;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace SistemaColecionador.Domain.Entities;
 
 public sealed class Book
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
     public Guid Id { get; set; }
 
     public string? Nome { get; set; }
