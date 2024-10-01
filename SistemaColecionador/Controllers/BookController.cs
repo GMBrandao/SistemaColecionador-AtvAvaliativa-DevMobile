@@ -22,7 +22,7 @@ public class BookController : ControllerBase
     [HttpPost]
     public ActionResult Post([FromBody] BookDto book)
     {
-        if (book == null) return BadRequest();
+        if (book == null) return NotFound();
 
         var errors = _bookService.CreateBook(book);
 
