@@ -4,6 +4,7 @@ using SistemaColecionador.Domain.Dto;
 using SistemaColecionador.Domain.Entities;
 using SistemaColecionador.Domain.Interfaces;
 using SistemaColecionador.Domain.Queries;
+using System.Text;
 
 namespace SistemaColecionador.Api.Controllers;
 
@@ -23,9 +24,13 @@ public class BookController : ControllerBase
     {
         if (book == null) return BadRequest();
 
-        var errors= _bookService.CreateBook(book);
+        var errors = _bookService.CreateBook(book);
 
-        if(errors.Any()) return BadRequest(errors.ToString());
+        var errorMessage = new StringBuilder();
+
+        errors.ForEach(error => errorMessage.AppendLine(error));
+
+        if(errors.Any()) return BadRequest(errorMessage.ToString());
         return Ok();
     }
 
@@ -36,11 +41,11 @@ public class BookController : ControllerBase
         return Ok(response);
     }
 
-    [HttpDelete("{id:guid}")]
-    public ActionResult Delete(Guid id)
+    [HttpDelete("{id}")]
+    public ActionResult Delete(string id)
     {
-        if (id == Guid.Empty) return NotFound();
-        _bookService.DeleteBook(id);
+        if (string.IsNullOrWhiteSpace(id)) return NotFound();
+        _bookService.DeleteBook(new Guid(id));
         return Ok();
     }
 }
