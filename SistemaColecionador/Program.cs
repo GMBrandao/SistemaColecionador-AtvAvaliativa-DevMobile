@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using SistemaColecionador.Api.Settings;
 using SistemaColecionador.Domain.Interfaces;
 using SistemaColecionador.Domain.Services;
@@ -12,16 +13,18 @@ public sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-
+        
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddCors(option =>
         {
-            option.AddPolicy(name: "_myOrigins",
-                               policy =>
-                               {
-                                   policy.WithOrigins("*");
-                               });
+            option.AddPolicy("AllowAll",
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
         });
 
         builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoSettings"));
@@ -39,7 +42,7 @@ public sealed class Program
             app.UseSwaggerUI();
         }
 
-        app.UseCors("_myOrigins");
+        app.UseCors("AllowAll");
 
         app.UseHttpsRedirection();
 
