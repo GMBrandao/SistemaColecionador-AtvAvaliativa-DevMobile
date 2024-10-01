@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SistemaColecionador.Domain\SistemaColecionador.Domain.csproj" />
+    <ProjectReference Include="..\SistemaColecionador.Infra\SistemaColecionador.Infra.csproj" />
   </ItemGroup>
 
 </Project>

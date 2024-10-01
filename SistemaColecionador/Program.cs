@@ -1,3 +1,9 @@
+using Microsoft.Extensions.Options;
+using SistemaColecionador.Api.Settings;
+using SistemaColecionador.Domain.Interfaces;
+using SistemaColecionador.Domain.Services;
+using SistemaColecionador.Infra.Mongo;
+
 namespace SistemaColecionador;
 
 public sealed class Program
@@ -17,6 +23,12 @@ public sealed class Program
                                    policy.WithOrigins("*");
                                });
         });
+
+        builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoSettings"));
+        builder.Services.AddSingleton<IMongoSettings>(s => s.GetRequiredService<IOptions<MongoSettings>>().Value);
+        builder.Services.AddSingleton<IBookRepository, BookRepository>();
+        builder.Services.AddSingleton<IBookService, BookService>();
+
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();

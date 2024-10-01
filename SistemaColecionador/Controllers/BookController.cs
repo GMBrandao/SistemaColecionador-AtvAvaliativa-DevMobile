@@ -23,7 +23,9 @@ public class BookController : ControllerBase
     {
         if (book == null) return BadRequest();
 
-        _bookService.CreateBook(book);
+        var errors= _bookService.CreateBook(book);
+
+        if(errors.Any()) return BadRequest(errors.ToString());
         return Ok();
     }
 
