@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using SistemaColecionador.Domain.Entities;
 using SistemaColecionador.Domain.Interfaces;
+using SistemaColecionador.Domain.Interfaces.Repositories;
 
 namespace SistemaColecionador.Infra.Mongo;
 
@@ -10,8 +11,8 @@ public sealed class BookRepository : IBookRepository
 
     public BookRepository(IMongoSettings settings)
     {
-        var customer = new MongoClient(settings.ConnectionString);
-        var database = customer.GetDatabase(settings.DatabaseName);
+        var client = new MongoClient(settings.ConnectionString);
+        var database = client.GetDatabase(settings.DatabaseName);
         _repo = database.GetCollection<Book>(settings.BookCollectionName);
     }
 

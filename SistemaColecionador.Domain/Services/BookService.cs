@@ -1,6 +1,7 @@
 ﻿using SistemaColecionador.Domain.Dto;
 using SistemaColecionador.Domain.Entities;
-using SistemaColecionador.Domain.Interfaces;
+using SistemaColecionador.Domain.Interfaces.Repositories;
+using SistemaColecionador.Domain.Interfaces.Services;
 using SistemaColecionador.Domain.Validator;
 
 namespace SistemaColecionador.Domain.Services;
@@ -20,8 +21,11 @@ public sealed class BookService : IBookService
         var validator = new BookDtoValidator();
         var result = validator.Validate(bookDto);
 
-        if(!result.IsValid)
+        if (!result.IsValid)
+        {
             result.Errors.ForEach(error => response.Add(error.ErrorMessage));
+            return response;
+        }
 
         var book = new Book
         {

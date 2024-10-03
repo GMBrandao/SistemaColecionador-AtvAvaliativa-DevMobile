@@ -1,6 +1,6 @@
 ﻿using SistemaColecionador.Domain.Entities;
 
-namespace SistemaColecionador.Domain.Interfaces;
+namespace SistemaColecionador.Domain.Interfaces.Repositories;
 
 public interface IBookRepository
 {

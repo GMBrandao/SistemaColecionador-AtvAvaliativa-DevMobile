@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SistemaColecionador.Domain.Dto;
 using SistemaColecionador.Domain.Entities;
-using SistemaColecionador.Domain.Interfaces;
+using SistemaColecionador.Domain.Interfaces.Services;
 using SistemaColecionador.Domain.Queries;
 using System.Text;
 

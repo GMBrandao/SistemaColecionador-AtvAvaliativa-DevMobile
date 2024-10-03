@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 using SistemaColecionador.Api.Settings;
 using SistemaColecionador.Domain.Interfaces;
+using SistemaColecionador.Domain.Interfaces.Repositories;
+using SistemaColecionador.Domain.Interfaces.Services;
 using SistemaColecionador.Domain.Services;
 using SistemaColecionador.Infra.Mongo;
 
@@ -30,7 +31,9 @@ public sealed class Program
         builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoSettings"));
         builder.Services.AddSingleton<IMongoSettings>(s => s.GetRequiredService<IOptions<MongoSettings>>().Value);
         builder.Services.AddSingleton<IBookRepository, BookRepository>();
+        builder.Services.AddSingleton<IUserRepository, UserRepository>();
         builder.Services.AddSingleton<IBookService, BookService>();
+        builder.Services.AddSingleton<IUserService, UserService>();
 
         builder.Services.AddSwaggerGen();
 
